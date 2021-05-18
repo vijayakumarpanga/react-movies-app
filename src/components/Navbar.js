@@ -1,10 +1,14 @@
 import React from 'react'
 import '../css/styles.css'
+
 const Navbar =()=>{
 return(
-    <div className ="navbar">
+    <div className="nav">
+    <div className ="search-container">
+
         <input type ="text" ></input>
-        <button onClick=""> Search</button>
+        <button id="search-btn"> Search</button>
+    </div>
     </div>
 ) 
 
