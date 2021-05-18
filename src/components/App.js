@@ -2,7 +2,7 @@ import React ,{Component} from 'react'
 import Navbar from './Navbar';
 import {data} from '../data'
 import MovieCard from './MovieCard';
-import {addMovies} from '../actions/actions'
+import {addMovies,tabChange} from '../actions/actions'
 class App extends Component {
   componentDidMount(){
     const {store} = this.props
@@ -25,21 +25,26 @@ class App extends Component {
     return false
     
   }
+  tabChange=(tabName)=>{
+    console.log("tabChange")
+    this.props.store.dispatch(tabChange(tabName))
+  }
 
   render(){
     const {store} = this.props
-   const  {movies,favouriteMovies}=store.getState()
+   const  {movies,favouriteMovies,showFavouriteTab}=store.getState()
+   const displayMovies = showFavouriteTab ? favouriteMovies : movies
    console.log(store.getState())
     return (
     <div >
      <Navbar></Navbar>
      <div className="main ">
       <div className ="tabs">
-        <div className= "tab">Movies</div>
-        <div className= "tab">Favourites</div>
+        <div className= {`tab ${showFavouriteTab ? "": `active-tabs`} `} onClick={()=>this.tabChange("Movies")}>Movies</div>
+        <div className= {`tab ${showFavouriteTab ? `active-tabs`:""} `} onClick={()=>this.tabChange("Favourites")}>Favourites</div>
       </div>
         <div className ="list">
-        {movies.map((movie,index)=> {
+        {displayMovies.map((movie,index)=> {
           return(
           <MovieCard
          isFavourite = {this.isFavourite(movie)}

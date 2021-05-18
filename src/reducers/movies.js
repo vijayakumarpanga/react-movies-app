@@ -1,8 +1,9 @@
-import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE} from '../actions/actions.js'
+import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE, TAB_CHANGE} from '../actions/actions.js'
 
 const initialState= {
     movies : [],
-    favouriteMovies : []
+    favouriteMovies : [],
+    showFavouriteTab : false
 }
 const movies =(state=initialState,action)=>{
 
@@ -30,7 +31,19 @@ const movies =(state=initialState,action)=>{
                 console.log("updateFavouriteMovies:",updateFavouriteMovies)
             return{...state, favouriteMovies : updateFavouriteMovies
             }
+            }
+        case TAB_CHANGE : {
+            if(action.tabName === 'Favourites' && state.showFavouriteTab === false){
+                        
+                            return {...state,showFavouriteTab : true}
+            }
+            else if(action.tabName === 'Movies' && state.showFavouriteTab === true){
+                        
+                return {...state,showFavouriteTab : false}
+            }
+            return {...state}
         }
+
         default  : 
             return state
     }
