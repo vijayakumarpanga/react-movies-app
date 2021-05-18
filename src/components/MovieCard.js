@@ -1,7 +1,16 @@
 import React from 'react'
+import { addFavMovies } from '../actions/actions'
 
 const MovieCard =(props)=>{
-    const {title,imdbRating,posterurl,storyline} = props.movie
+    const addFavourite=()=>{
+        props.dispatch(addFavMovies(props.movie))
+      
+    }
+ const removeFavourite=()=>{
+      
+    }
+    const {title,imdbRating,posterurl,storyline,} = props.movie
+    console.log(props.isFavourite)
     return(
         <div className="movie-card">
             <div className="left">
@@ -12,8 +21,15 @@ const MovieCard =(props)=>{
                 <div className="plot">{storyline}</div>
                 <div className="footer" >
                     <div>{imdbRating}</div>
-                    <button className="favourite-btn">Favourite</button>
-              
+                    {props.isFavourite ?  <button className="favourite-btn"
+                        onClick = {removeFavourite}>Unfavourite</button> : 
+                        <button className="favourite-btn"
+                        onClick = {addFavourite}>Favourite</button>
+                         }
+                    {/* <button className="favourite-btn"
+                        onClick = {addFavourite}>Favourite</button>
+                    <button className="favourite-btn"
+                        onClick = {removeFavourite}>Unfavourite</button> */}
                  </div> 
             </div>
             <div></div></div>
