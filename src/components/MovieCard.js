@@ -1,12 +1,13 @@
 import React from 'react'
-import { addFavMovies } from '../actions/actions'
+import { addFavMovies,unFavouriteMovie } from '../actions/actions'
 
 const MovieCard =(props)=>{
     const addFavourite=()=>{
         props.dispatch(addFavMovies(props.movie))
       
     }
- const removeFavourite=()=>{
+ const unFavourite=()=>{
+     props.dispatch(unFavouriteMovie(props.movie))
       
     }
     const {title,imdbRating,posterurl,storyline,} = props.movie
@@ -22,7 +23,7 @@ const MovieCard =(props)=>{
                 <div className="footer" >
                     <div>{imdbRating}</div>
                     {props.isFavourite ?  <button className="favourite-btn"
-                        onClick = {removeFavourite}>Unfavourite</button> : 
+                        onClick = {unFavourite}>Unfavourite</button> : 
                         <button className="favourite-btn"
                         onClick = {addFavourite}>Favourite</button>
                          }

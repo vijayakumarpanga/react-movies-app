@@ -1,4 +1,4 @@
-import {ADD_MOVIES,ADD_FAV_MOVIE} from '../actions/actions.js'
+import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE} from '../actions/actions.js'
 
 const initialState= {
     movies : [],
@@ -20,6 +20,17 @@ const movies =(state=initialState,action)=>{
             return   {...state,movies : action.movies}
         case ADD_FAV_MOVIE : 
             return { ...state, favouriteMovies : [...state.favouriteMovies,action.movie]}
+        case UN_FAV_MOVIE :{
+            const updateFavouriteMovies = state.favouriteMovies.filter((movie)=> {
+                console.log(`${movie.title} and ${action.movie.title}`)
+                if(movie.title != action.movie.title)
+                return movie
+
+                } )
+                console.log("updateFavouriteMovies:",updateFavouriteMovies)
+            return{...state, favouriteMovies : updateFavouriteMovies
+            }
+        }
         default  : 
             return state
     }
