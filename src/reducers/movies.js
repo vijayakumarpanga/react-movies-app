@@ -1,11 +1,11 @@
+import {combineReducers} from 'redux'
 import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE, TAB_CHANGE} from '../actions/actions.js'
-
-const initialState= {
-    movies : [],
+const initialMovieState= {
+    moviesList : [],
     favouriteMovies : [],
     showFavouriteTab : false
 }
-const movies =(state=initialState,action)=>{
+export function movies(state=initialMovieState,action){
 
     // if(action.type=="ADD_MOVIES"){
         
@@ -18,9 +18,9 @@ const movies =(state=initialState,action)=>{
     //  return state
     switch(action.type){
         case ADD_MOVIES :
-            return   {...state,movies : action.movies}
+            return   {...state,moviesList : action.movies}
         case ADD_FAV_MOVIE : 
-            return { ...state, favouriteMovies : [...state.favouriteMovies,action.movie]}
+            return { ...state, favouriteMovies : [action.movie,...state.favouriteMovies,]}
         case UN_FAV_MOVIE :{
             const updateFavouriteMovies = state.favouriteMovies.filter((movie)=> {
                 console.log(`${movie.title} and ${action.movie.title}`)
@@ -49,4 +49,27 @@ const movies =(state=initialState,action)=>{
     }
            
 }
-export default movies
+const intialSearchState = {
+  result : {}
+}
+export function search (state=intialSearchState,action){
+switch(action.type){
+case 'SEARCH_MOVIE' : 
+    return {...state}
+ default : 
+    return state
+}
+}
+const rootInitialState ={
+    moviesState : initialMovieState,
+    searchState : intialSearchState
+}
+// const rootReducer=(state=rootInitialState ,action)=>{
+// return {
+//     moviesState : movies(state.moviesState,action),
+//     searchState : search(state.searchState,action)
+// }
+
+// }
+
+export default combineReducers({movies,search})

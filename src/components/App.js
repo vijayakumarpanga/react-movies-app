@@ -15,7 +15,9 @@ class App extends Component {
     
   }
  isFavourite=(movie)=>{
-    const {favouriteMovies} = this.props.store.getState()
+  const {movies,search} = this.props.store.getState()
+ 
+    const {favouriteMovies} = movies
    
     const index = favouriteMovies.indexOf(movie) 
     console.log(index)
@@ -25,23 +27,26 @@ class App extends Component {
     return false
     
   }
-  tabChange=(tabName)=>{
+  tabChangeHandler=(tabName)=>{
     console.log("tabChange")
     this.props.store.dispatch(tabChange(tabName))
   }
 
   render(){
     const {store} = this.props
-   const  {movies,favouriteMovies,showFavouriteTab}=store.getState()
-   const displayMovies = showFavouriteTab ? favouriteMovies : movies
-   console.log(store.getState())
+    
+   // console.log(store.getState());
+    const {movies,search} = store.getState()
+   const {moviesList,favouriteMovies,showFavouriteTab}=movies
+   const displayMovies = showFavouriteTab ? favouriteMovies : moviesList
+   console.log(movies)
     return (
     <div >
      <Navbar></Navbar>
      <div className="main ">
       <div className ="tabs">
-        <div className= {`tab ${showFavouriteTab ? "": `active-tabs`} `} onClick={()=>this.tabChange("Movies")}>Movies</div>
-        <div className= {`tab ${showFavouriteTab ? `active-tabs`:""} `} onClick={()=>this.tabChange("Favourites")}>Favourites</div>
+        <div className= {`tab ${showFavouriteTab ? "": `active-tabs`} `} onClick={()=>this.tabChangeHandler("Movies")}>Movies</div>
+        <div className= {`tab ${showFavouriteTab ? `active-tabs`:""} `} onClick={()=>this.tabChangeHandler("Favourites")}>Favourites</div>
       </div>
         <div className ="list">
         {displayMovies.map((movie,index)=> {
