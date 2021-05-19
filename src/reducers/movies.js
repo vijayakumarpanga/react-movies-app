@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE, TAB_CHANGE} from '../actions/actions.js'
+import {ADD_MOVIES,ADD_FAV_MOVIE,UN_FAV_MOVIE, TAB_CHANGE,ADD_MOVIE} from '../actions/actions.js'
 const initialMovieState= {
     moviesList : [],
     favouriteMovies : [],
@@ -16,6 +16,7 @@ export function movies(state=initialMovieState,action){
     //     return {...state,favouriteMovies :[...state.favouriteMovies,action.movie]}
     //  }
     //  return state
+    console.log("Movie reducer action:" ,action)
     switch(action.type){
         case ADD_MOVIES :
             return   {...state,moviesList : action.movies}
@@ -43,6 +44,9 @@ export function movies(state=initialMovieState,action){
             }
             return {...state}
         }
+        case ADD_MOVIE : {
+            return { ...state, moviesList : [...state.moviesList,action.movie,]}
+        }
 
         default  : 
             return state
@@ -50,12 +54,20 @@ export function movies(state=initialMovieState,action){
            
 }
 const intialSearchState = {
-  result : {}
+  result : {},
+  showSearchResult : false,
 }
 export function search (state=intialSearchState,action){
+console.log("Search reducer :" ,action)
+
 switch(action.type){
-case 'SEARCH_MOVIE' : 
-    return {...state}
+case 'SEARCH_MOVIE' : {
+    return {result : action.movie,showSearchResult : true}
+    }
+case ADD_MOVIE : {
+    return { ...state,showSearchResult : false}
+    }
+    
  default : 
     return state
 }

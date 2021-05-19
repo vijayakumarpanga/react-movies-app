@@ -11,7 +11,7 @@ class App extends Component {
       console.log('updated')})
    
     store.dispatch(addMovies(data))
-    console.log(store.getState())
+    console.log("Inside component update of App Comp ",store.getState())
     
   }
  isFavourite=(movie)=>{
@@ -39,10 +39,11 @@ class App extends Component {
     const {movies,search} = store.getState()
    const {moviesList,favouriteMovies,showFavouriteTab}=movies
    const displayMovies = showFavouriteTab ? favouriteMovies : moviesList
-   console.log(movies)
+   console.log("inside app render",movies)
+   console.log("search",search)
     return (
     <div >
-     <Navbar></Navbar>
+     <Navbar dispatch= {store.dispatch} search={search}></Navbar>
      <div className="main ">
       <div className ="tabs">
         <div className= {`tab ${showFavouriteTab ? "": `active-tabs`} `} onClick={()=>this.tabChangeHandler("Movies")}>Movies</div>

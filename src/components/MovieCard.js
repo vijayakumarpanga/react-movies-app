@@ -10,16 +10,16 @@ const MovieCard =(props)=>{
      props.dispatch(unFavouriteMovie(props.movie))
       
     }
-    const {title,imdbRating,posterurl,storyline,} = props.movie
+    const {Title,imdbRating,Poster,Plot} = props.movie
     console.log(props.isFavourite)
     return(
         <div className="movie-card">
             <div className="left">
-             <img  src= {posterurl} alt = "Movie Poster"></img>
+             <img  src= {Poster} alt = "Movie Poster"></img>
              </div>
             <div className = "right">
-                <div className="title">{title}</div>
-                <div className="plot">{storyline}</div>
+                <div className="title">{Title}</div>
+                <div className="plot">{Plot}</div>
                 <div className="footer" >
                     <div>{imdbRating}</div>
                     {props.isFavourite ?  <button className="favourite-btn"
