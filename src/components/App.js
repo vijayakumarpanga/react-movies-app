@@ -3,21 +3,23 @@ import Navbar from './Navbar';
 import {data} from '../data'
 import MovieCard from './MovieCard';
 import {addMovies,tabChange} from '../actions/actions'
+import { connect } from 'react-redux';
+import { movies } from '../reducers/movies';
 class App extends Component {
   componentDidMount(){
-    const {store} = this.props
-    store.subscribe((state)=>{
-      this.forceUpdate()
-      console.log('updated')})
+    // const {store} = this.props
+    // store.subscribe((state)=>{
+    //   this.forceUpdate()
+    //   console.log('updated')})
    
-    store.dispatch(addMovies(data))
-    console.log("Inside component update of App Comp ",store.getState())
+    this.props.dispatch(addMovies(data))
+    console.log("Inside component update of App Comp ",this.props)
     
   }
  isFavourite=(movie)=>{
-  const {movies,search} = this.props.store.getState()
+  //const {movies,search} = this.props.store.getState()
  
-    const {favouriteMovies} = movies
+    const {favouriteMovies} =this.props.movies
    
     const index = favouriteMovies.indexOf(movie) 
     console.log(index)
@@ -29,21 +31,22 @@ class App extends Component {
   }
   tabChangeHandler=(tabName)=>{
     console.log("tabChange")
-    this.props.store.dispatch(tabChange(tabName))
+    this.props.dispatch(tabChange(tabName))
   }
 
   render(){
-    const {store} = this.props
+    console.log("inside app",this.props.movies)
+    const {movies} = this.props
     
    // console.log(store.getState());
-    const {movies,search} = store.getState()
+   // const {movies,search} = store.getState()
    const {moviesList,favouriteMovies,showFavouriteTab}=movies
    const displayMovies = showFavouriteTab ? favouriteMovies : moviesList
    console.log("inside app render",movies)
-   console.log("search",search)
+
     return (
     <div >
-     <Navbar dispatch= {store.dispatch} search={search}></Navbar>
+     <Navbar></Navbar>
      <div className="main ">
       <div className ="tabs">
         <div className= {`tab ${showFavouriteTab ? "": `active-tabs`} `} onClick={()=>this.tabChangeHandler("Movies")}>Movies</div>
@@ -54,7 +57,7 @@ class App extends Component {
           return(
           <MovieCard
          isFavourite = {this.isFavourite(movie)}
-         dispatch={store.dispatch}
+         dispatch={this.props.dispatch}
          key={index} movie={movie}
          >
          </MovieCard>
@@ -65,5 +68,9 @@ class App extends Component {
   );
   }
 }
-
-export default App;
+function mapStateToProps(state){
+  console.log("connectedAppComp :",state)
+ return {movies : state.movies}
+}
+const connectedAppComp = connect(mapStateToProps)(App)
+export default connectedAppComp;

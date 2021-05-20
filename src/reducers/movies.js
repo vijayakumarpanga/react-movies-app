@@ -16,7 +16,7 @@ export function movies(state=initialMovieState,action){
     //     return {...state,favouriteMovies :[...state.favouriteMovies,action.movie]}
     //  }
     //  return state
-    console.log("Movie reducer action:" ,action)
+    console.log("Movie reducer action:" ,action.movie)
     switch(action.type){
         case ADD_MOVIES :
             return   {...state,moviesList : action.movies}
@@ -24,8 +24,8 @@ export function movies(state=initialMovieState,action){
             return { ...state, favouriteMovies : [action.movie,...state.favouriteMovies,]}
         case UN_FAV_MOVIE :{
             const updateFavouriteMovies = state.favouriteMovies.filter((movie)=> {
-                console.log(`${movie.title} and ${action.movie.title}`)
-                if(movie.title != action.movie.title)
+                console.log(`${movie.Title} and ${action.movie.Title}`)
+                if(movie.Title != action.movie.Title)
                 return movie
 
                 } )

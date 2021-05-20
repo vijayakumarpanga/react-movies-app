@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import { searchMovie } from '../actions/searchActions'
 import {addMovie} from '../actions/actions'
 import '../css/styles.css'
+import { connect } from 'react-redux'
 
 class Navbar extends Component{
     constructor (){
@@ -55,4 +56,9 @@ class Navbar extends Component{
 }
 
 }
-export default Navbar
+function mapStateToProps({search}){
+    console.log("connectedAppComp :",search)
+   return {search}
+  }
+const connectedNavbarComp =connect(mapStateToProps)(Navbar)
+export default connectedNavbarComp
